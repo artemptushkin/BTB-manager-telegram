@@ -204,3 +204,9 @@ This project follows the [all-contributors] specification.
 [open an issue]: https://github.com/lorcalhost/BTB-manager-telegram/issues/new
 [contributing guidelines]: ./CONTRIBUTING.md
 [all-contributors]: https://github.com/all-contributors/all-contributors
+
+### How to build image
+
+```
+docker buildx build -t hustlers4u/btb-manager-telegram . --platform linux/arm/v7
+```

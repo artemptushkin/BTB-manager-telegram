@@ -237,16 +237,11 @@ def current_ratios():
     logger.info("Current ratios button pressed.")
 
     db_file_path = os.path.join(settings.ROOT_PATH, "data/crypto_trading.db")
-    user_cfg_file_path = os.path.join(settings.ROOT_PATH, "user.cfg")
     message = [f"⚠ Unable to find database file at `{db_file_path}`\."]
     if os.path.exists(db_file_path):
         try:
-            # Get bridge currency symbol
-            with open(user_cfg_file_path) as cfg:
-                config = ConfigParser()
-                config.read_file(cfg)
-                bridge = config.get("binance_user_config", "bridge")
-                scout_multiplier = config.get("binance_user_config", "scout_multiplier")
+            bridge = os.environ.get("BRIDGE_SYMBOL")
+            scout_multiplier = os.environ.get("SCOUT_MULTIPLIER")
 
             con = sqlite3.connect(db_file_path)
             cur = con.cursor()

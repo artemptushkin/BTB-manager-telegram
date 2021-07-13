@@ -488,9 +488,9 @@ def panic(update: Update, _: CallbackContext) -> int:
         with open(user_cfg_file_path) as cfg:
             config = ConfigParser()
             config.read_file(cfg)
-            api_key = config.get("binance_user_config", "api_key")
-            api_secret_key = config.get("binance_user_config", "api_secret_key")
-            tld = config.get("binance_user_config", "tld")
+            api_key = os.environ.get("API_KEY")
+            api_secret_key = os.environ.get("API_SECRET_KEY")
+            tld = os.environ.get("TLD")
 
         if update.message.text != "⚠ Stop & sell at market price":
             params = {

@@ -22,30 +22,7 @@ def setup_root_path_constant():
 
 def setup_telegram_constants():
     logger.info("Retrieving Telegram token and chat_id from apprise.yml file.")
-    telegram_url = None
-    yaml_file_path = os.path.join(settings.ROOT_PATH, "config/apprise.yml")
-    if os.path.exists(yaml_file_path):
-        with open(yaml_file_path) as f:
-            try:
-                parsed_urls = yaml.load(f, Loader=yaml.FullLoader)["urls"]
-            except Exception:
-                logger.error(
-                    "Unable to correctly read apprise.yml file. Make sure it is correctly set up. Aborting."
-                )
-                exit(-1)
-            for url in parsed_urls:
-                if url.startswith("tgram"):
-                    telegram_url = url.split("//")[1]
-        if not telegram_url:
-            logger.error(
-                "No telegram configuration was found in your apprise.yml file. Aborting."
-            )
-            exit(-1)
-    else:
-        logger.error(
-            f'Unable to find apprise.yml file at "{yaml_file_path}". Aborting.'
-        )
-        exit(-1)
+    telegram_url = os.environ.get("TELEGRAM_URL")
     try:
         settings.TOKEN = telegram_url.split("/")[0]
         settings.CHAT_ID = telegram_url.split("/")[1]
